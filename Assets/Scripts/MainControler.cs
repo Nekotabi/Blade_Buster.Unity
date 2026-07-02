@@ -13,6 +13,8 @@ public class MainControler : MonoBehaviour
     public static InputState state;
     public static MainControler controler;
     public static event Action DebugReference;
+    public static event Action PlayerAttack;
+    public static event Action EnemyAttack;
 
     void Awake()
     {

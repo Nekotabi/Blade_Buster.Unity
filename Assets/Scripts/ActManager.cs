@@ -26,7 +26,6 @@ public class ActManager : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    Debug.Log("êGÇÍÇΩÇÊ");
                     beganPoint = touch.position;
                     touchStartTime = Time.time;
                     break;
@@ -34,7 +33,6 @@ public class ActManager : MonoBehaviour
                     touchingTime = Time.time - touchStartTime;
                     distance = Vector2.Distance(beganPoint, touch.position);
                     JudgeInput(touchingTime,  distance);
-                    Debug.Log("ó£ÇµÇΩ");
                     MainControler.ReferenceRequest();
                     break;
             }
