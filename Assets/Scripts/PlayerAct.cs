@@ -1,16 +1,33 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAct : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    Animator PLAimator;
     void Start()
     {
-        
+        PLAimator = this.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        MainControler.PlayerAttack += OnAttack;
+    }
+
+    private void OnDisable()
+    {
+        MainControler.PlayerAttack -= OnAttack;
+    }
+
+    private void OnAttack()
+    {
+        StartCoroutine(AttackPaform());
+    }
+
+    private IEnumerator AttackPaform()
+    {
+        PLAimator.SetBool("IsAttack", true);
+        yield return new WaitForEndOfFrame();
+        PLAimator.SetBool("IsAttack", false);
     }
 }

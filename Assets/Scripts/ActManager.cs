@@ -32,30 +32,26 @@ public class ActManager : MonoBehaviour
                 case TouchPhase.Ended:
                     touchingTime = Time.time - touchStartTime;
                     distance = Vector2.Distance(beganPoint, touch.position);
-                    JudgeInput(touchingTime,  distance);
+                    JudgeInput(touchingTime, distance);
                     MainControler.ReferenceRequest();
                     break;
             }
-        }        
+        }
     }
 
     private void JudgeInput(float _time, float _dist)
     {
         //タップ判定
         if (_dist < tapCurrent)
-        {
             MainControler.state = MainControler.InputState.TAP;
-            return;
-        }
-
         //フリック判定
-        if (_time < timeCurrent)
-        {
+        else if (_time < timeCurrent)
             MainControler.state = MainControler.InputState.FLICK;
-            return;
-        }
+        //スワイプ判定
+        else
+            MainControler.state = MainControler.InputState.SWIPE;
 
-         MainControler.state = MainControler.InputState.SWIPE;
-        return;
+        touchingTime = 0f;
+        distance = 0f;
     }
 }

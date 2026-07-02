@@ -23,10 +23,16 @@ public class MainControler : MonoBehaviour
             Destroy(this.gameObject);
         else
             controler = this;
+        state = InputState.NONE;
     }
 
     public static void ReferenceRequest()
     {
         DebugReference?.Invoke();
+        if (state == InputState.FLICK || state == InputState.SWIPE)
+        {
+            PlayerAttack?.Invoke();
+            state = InputState.NONE;
+        }
     }
 }
