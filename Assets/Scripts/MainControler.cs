@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class MainControler : MonoBehaviour
@@ -15,6 +17,9 @@ public class MainControler : MonoBehaviour
     public static event Action DebugReference;
     public static event Action PlayerAttack;
     public static event Action EnemyAttack;
+    public static event Action<bool> WinLoseJudge;
+    [SerializeField] private List<LayerMask> layerMasks;
+    public static LayerMask[] masks;
 
     void Awake()
     {
@@ -24,6 +29,8 @@ public class MainControler : MonoBehaviour
         else
             controler = this;
         state = InputState.NONE;
+
+        masks = layerMasks.ToArray();
     }
 
     public static void ReferenceRequest()
@@ -34,5 +41,13 @@ public class MainControler : MonoBehaviour
             PlayerAttack?.Invoke();
             state = InputState.NONE;
         }
+    }
+
+    public static void OnDead(LayerMask _layer)
+    {
+        if (_layer == masks[0])
+            WinLoseJudge?.Invoke(false);
+        if (_layer == masks[1])
+            WinLoseJudge?.Invoke(true);
     }
 }
